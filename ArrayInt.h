@@ -3,6 +3,7 @@
 #define ARRAYINT_H
 
 #include <cassert> // для assert()
+#include <iostream>
 
 class ArrayInt
 {
@@ -111,7 +112,75 @@ public:
         m_data = data;
         ++m_length;
     }
+
+    //Task 1 ======================================================================================================================================
     
+    void deleteIndex(int index)
+    {
+        assert(index >= 0 && index <= m_length);
+
+        int* newData = new int[m_length - 1];
+        int j = 0;
+
+        for (int i = 0; i < m_length; i++)
+        {
+            if (i == index)
+            {
+                //no copying m_data[i], skip to m_data[i + 1]
+            }
+            else
+            {
+                newData[j] = m_data[i];
+                j++;
+            }
+            
+        }
+
+        delete[] m_data;
+        m_data = newData;
+        --m_length;
+
+    }
+
+    void pop_back()
+    {
+        deleteIndex(m_length - 1);
+    }
+
+    void pop_front()
+    {
+        deleteIndex(0);
+    }
+
+    void sort()
+    {
+        int temp;
+        for (int i = 0; i < m_length; i++)
+        {
+            for (int j = 0; j < m_length - 1; j++)
+            {
+                if (m_data[j] > m_data[j + 1])
+                {
+                    temp = m_data[j + 1];
+                    m_data[j + 1] = m_data[j];
+                    m_data[j] = temp;
+                }
+            }
+        }
+    }
+
+    void print()
+    {
+        std::cout << "\n";
+        for (int i = 0; i < m_length; i++)
+        {
+            std::cout << m_data[i] << " ";
+        }
+        std::cout << "\n";
+    }
+
+    //Task 1 End ==================================================================================================================================
+
     void push_back(int value) 
     { 
         insertBefore(value, m_length); 
